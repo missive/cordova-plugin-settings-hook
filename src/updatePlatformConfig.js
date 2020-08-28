@@ -76,7 +76,7 @@ const manifestPath = {
 function getAndroidManifestFilePath(rootdir) {
     var cordovaAndroid6Path = path.join(rootdir, manifestPath.cordovaAndroid6);
     var cordovaAndroid7Path = path.join(rootdir, manifestPath.cordovaAndroid7);
-    
+
     if(fs.existsSync(cordovaAndroid7Path)){
         return cordovaAndroid7Path;
     }else if(fs.existsSync(cordovaAndroid6Path)){
@@ -208,7 +208,7 @@ module.exports = function(context) {
             parsePreferences: function (configData, platform) {
                 const preferences = this.getPreferences(platform),
                     type = 'preference';
-                
+
                 preferences.forEach( function (preference) {
                     // check if there are specific configuration to map to config for this platform
                     if (!preferenceMappingData[platform]) {
@@ -290,7 +290,7 @@ module.exports = function(context) {
                 const cordovaApp = "application/activity/intent-filter/action[@android:name='android.intent.action.MAIN']/../..";
                 const tempNode = rootManifest.find(cordovaApp);
                 return tempNode;
-            }, 
+            },
 
             // Updates the AndroidManifest.xml target file with data from config.xml
             updateAndroidManifest: function (targetFile, configItems) {
@@ -299,7 +299,7 @@ module.exports = function(context) {
                 const mainActivity = platformConfig.getMainAndroidActivityNode(root);
 
                 configItems.forEach( function (item) {
-                    
+
                     let parentEl;
                     if (item.parent === "__cordovaMainActivity__") {
                         parentEl = mainActivity;
@@ -307,7 +307,7 @@ module.exports = function(context) {
                         // if parent is not found on the root, child/grandchild nodes are searched
                         parentEl = root.find(item.parent) || root.find('*/' + item.parent);
                     }
-                    
+
                     const data = item.data;
                     let childSelector = item.destination,
                         childEl;
@@ -330,13 +330,13 @@ module.exports = function(context) {
                             childEl = new et.Element(item.destination);
                             parentEl.append(childEl);
                         }
-                        
+
                         if (typeof data === "object") {
-                            // copy all config.xml data except for the generated _id property                            
+                            // copy all config.xml data except for the generated _id property
                             for (let key in data) {
                                 // skip loop if the property is from prototype
                                 if (!data.hasOwnProperty(key)) continue;
-                                
+
                                 if(key !== '_id') {
                                     childEl[key] = data[key];
                                 }
