@@ -88,7 +88,7 @@ function getAndroidManifestFilePath(rootdir) {
 
 module.exports = function(context) {
 
-    const cordovaUtil = context.requireCordovaModule('cordova-lib/src/cordova/util');
+    const cordovaUtil = require('cordova-lib/src/cordova/util');
     const rootdir = cordovaUtil.isCordova();
 
     const platformConfig = (function(){
